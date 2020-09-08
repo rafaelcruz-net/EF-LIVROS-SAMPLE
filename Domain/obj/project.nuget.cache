@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "kvcuA510zBt6+Oby/pq9OMt+QF82S/8BkzrMKntH4SeIzkKqCCWXaSzzgAirT/eOEdXf7YMeGKeb+uFcIrjSPQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\rafae\\source\\repos\\Biblioteca\\Domain\\Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\rafae\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.2\\microsoft.aspnetcore.app.ref.3.1.2.nupkg.sha512"
+  ],
+  "logs": []
+}
