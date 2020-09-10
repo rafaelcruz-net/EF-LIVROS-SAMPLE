@@ -10,6 +10,8 @@ namespace Domain
         public String Name { get; set; }
         public String Email { get; set; }
         public virtual IList<Book> Books { get; set; }
+        public virtual IList<Phone> Phones { get; set; }
+
 
     }
 }

@@ -19,8 +19,7 @@ namespace Repository.Mapping
 
             // RELACIONAMENTO BI-DIRECIONAL
             builder.HasMany<Book>(x => x.Books).WithOne(x => x.Author);
-
-
+            builder.HasMany<Phone>(x => x.Phones).WithOne(x => x.Author);
         }
     }
 }

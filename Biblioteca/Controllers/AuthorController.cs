@@ -25,14 +25,20 @@ namespace Biblioteca.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
-            return await _context.Authors.Include(x => x.Books).ToListAsync();
+            return await _context.Authors
+                                 .Include(x => x.Books)
+                                 .Include(x => x.Phones)
+                                 .ToListAsync();
         }
 
         // GET: api/Author/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Author>> GetAuthor(int id)
         {
-            var author = await _context.Authors.Include(x => x.Books).FirstOrDefaultAsync(x => x.Id == id);
+            var author = await _context.Authors
+                                       .Include(x => x.Books)
+                                       .Include(x => x.Phones)
+                                       .FirstOrDefaultAsync(x => x.Id == id);
 
             if (author == null)
             {
@@ -90,19 +96,42 @@ namespace Biblioteca.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Author>> DeleteAuthor(int id)
         {
-            var author = await _context.Authors.Include(x => x.Books).FirstOrDefaultAsync(x => x.Id == id);
+            var author = await _context.Authors
+                                       .Include(x => x.Books)
+                                       .Include(x => x.Phones)
+                                       .FirstOrDefaultAsync(x => x.Id == id);
+            
             if (author == null)
             {
                 return NotFound();
             }
 
-            foreach (var item in author.Books)
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                _context.Books.Remove(item);
-            }
+                try
+                {
 
-            _context.Authors.Remove(author);
-            await _context.SaveChangesAsync();
+                    foreach (var item in author.Books)
+                    {
+                        _context.Books.Remove(item);
+                    }
+
+                    foreach (var item in author.Phones)
+                    {
+                        _context.Phones.Remove(item);
+                    }
+
+                    _context.Authors.Remove(author);
+
+                    await _context.SaveChangesAsync();
+
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                }
+            }
 
             return NoContent(); 
         }

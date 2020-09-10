@@ -12,6 +12,8 @@ namespace Repository.Context
     {
         public DbSet<Author> Authors { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<Phone> Phones { get; set; }
+
 
         public static readonly ILoggerFactory loggerFactory = LoggerFactory.Create(b => { b.AddConsole(); });
 
@@ -33,6 +35,8 @@ namespace Repository.Context
         {
             modelBuilder.ApplyConfiguration(new BookMap());
             modelBuilder.ApplyConfiguration(new AuthorMap());
+            modelBuilder.ApplyConfiguration(new PhoneMap());
+
 
             base.OnModelCreating(modelBuilder);
         }
